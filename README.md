@@ -38,13 +38,13 @@ Please be sure that if they download the repo, they will be able to view the com
 ## Full Report describing how I built the model, how I used cross-validation, accuracy and errors, and choices I made
 
 ### STEP 1 - Loading the R Packages
-library(caret)
-library(rpart)
-library(rpart.plot)
-library(RColorBrewer)
-library(RGtk2)
-library(rattle)
-library(randomForest)
+library(caret)  
+library(rpart)  
+library(rpart.plot)  
+library(RColorBrewer)  
+library(RGtk2)  
+library(rattle)  
+library(randomForest)  
 
 ### STEP 2 - Loading the Dataset
 Download the data files from the Internet and load them into two data frames. 
@@ -132,7 +132,7 @@ confusionMatrix(prediction, testing$classe)
 
 **Results from Confusion Matrix and Statistics:**
 
-Reference
+Reference  
 Prediction    A    B    C    D    E
          A 2026  252   45   81   46
          B   60  868   70   96  114
@@ -140,7 +140,7 @@ Prediction    A    B    C    D    E
          D   70  111   83  820   86
          E   33  100   91  108 1050
 
-Overall Statistics                             
+Overall Statistics                           
                Accuracy : 0.7447          
                  95% CI : (0.7349, 0.7543)
     No Information Rate : 0.2845          
@@ -148,8 +148,8 @@ Overall Statistics
                   Kappa : 0.6761                                
  Mcnemar's Test P-Value : < 2.2e-16       
 
-Statistics by Class:
-                     Class: A Class: B Class: C Class: D Class: E
+Statistics by Class:  
+                     Class: A Class: B Class: C Class: D Class: E  
 Sensitivity            0.9077   0.5718   0.7887   0.6376   0.7282
 Specificity            0.9245   0.9463   0.9140   0.9466   0.9482
 Pos Pred Value         0.8269   0.7185   0.6595   0.7009   0.7598
@@ -175,7 +175,7 @@ prediction <- predict(modFitRF, testing, type = "class")
 confusionMatrix(prediction, testing$classe)
 
 **Results from Confusion Matrix and Statistics:**  
-Reference
+Reference  
 Prediction    A    B    C    D    E
          A 2228    4    0    0    0
          B    4 1507   13    0    0
@@ -183,7 +183,7 @@ Prediction    A    B    C    D    E
          D    0    0    0 1263    3
          E    0    0    0    0 1438
 
-Overall Statistics                                        
+Overall Statistics                                         
                Accuracy : 0.993           
                  95% CI : (0.9909, 0.9947)
     No Information Rate : 0.2845          
@@ -191,8 +191,8 @@ Overall Statistics
                   Kappa : 0.9911                                       
  Mcnemar's Test P-Value : NA              
 
-Statistics by Class:
-                     Class: A Class: B Class: C Class: D Class: E
+Statistics by Class:  
+                     Class: A Class: B Class: C Class: D Class: E  
 Sensitivity            0.9982   0.9928   0.9905   0.9821   0.9972
 Specificity            0.9993   0.9973   0.9952   0.9995   1.0000
 Pos Pred Value         0.9982   0.9888   0.9776   0.9976   1.0000
