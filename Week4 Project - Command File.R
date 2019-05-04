@@ -60,7 +60,7 @@ dim(testing)   # 7846 obs. of 53 variables
 
 # Decision Tree Model
 # -------------------
-First, I will try using Decision Tree. The accuracy may not be high.
+# First, I will try using Decision Tree. The accuracy may not be high.
 
 # Build the model
 modFitDT <- rpart(classe ~ ., data = training, method="class")
