@@ -1,9 +1,12 @@
 # Coursera-PracticalMachineLearning - Week 4 Project Assignment
 
-** Note:** The full-report is available in this file, after the introduction of the project
+**Note:** The full-report is available in this file, after the introduction of the project
 
 ## Background
-Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement – a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: http://groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset).
+Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement – a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. 
+One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it.
+In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways.
+More information is available from the website here: http://groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset).
 
 ## DataSet
 The training data for this project are available here:
@@ -12,7 +15,8 @@ https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv
 The test data are available here:
 https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv
 
-The data for this project come from this source: http://groupware.les.inf.puc-rio.br/har. If you use the document you create for this class for any purpose please cite them as they have been very generous in allowing their data to be used for this kind of assignment.
+The data for this project come from this source: http://groupware.les.inf.puc-rio.br/har. 
+If you use the document you create for this class for any purpose please cite them as they have been very generous in allowing their data to be used for this kind of assignment.
 
 ## What you should submit
 The goal of your project is to predict the manner in which they did the exercise. This is the "classe" variable in the training set. 
@@ -25,7 +29,7 @@ You should create a report (i.e. this file) describing:
 You will also use your prediction model to predict 20 different test cases.
 
 ## Peer Review Portion
-Your submission for the Peer Review portion should consist of a link to a Github repo with your R markdown and compiled HTML file describing your analysis. Please constrain the text of the writeup to < 2000 words and the number of figures to be less than 5. It will make it easier for the graders if you submit a repo with a gh-pages branch so the HTML page can be viewed online (and you always want to make it easy on graders :-).
+Your submission for the Peer Review portion should consist of a link to a Github repo with your R markdown and compiled HTML file describing your analysis. Please constrain the text of the writeup to < 2000 words and the number of figures to be less than 5. It will make it easier for the graders if you submit a repo with a gh-pages branch so the HTML page can be viewed online (and you always want to make it easy on graders.
 
 ## Reproducibility
 Due to security concerns with the exchange of R code, your code will not be run during the evaluation by your classmates. 
@@ -52,9 +56,9 @@ UrlTest  <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
 setwd("C:/Users/Philippe/Documents/DataCourse")
 
 dt_training <- read.csv(url(UrlTrain))
-** 19622 obs. of 160 variables **
+**19622 obs. of 160 variables**
 dt_testing  <- read.csv(url(UrlTest))
-** 20 obs. of 160 variables **
+**20 obs. of 160 variables**
 
 ### STEP 3 - Cleaning the Data
 Remove all columns that contains NA and remove features that are not in the testing dataset. 
@@ -89,9 +93,9 @@ dt_training <- dt_training[,c(features,"classe")]
 dt_testing <- dt_testing[,c(features,"problem_id")]
 
 dim(dt_training)
-** 19622 obs. of 53 variables **
-dim(dt_testing);
-** 20 obs. of 53 variables **
+**19622 obs. of 53 variables**
+dim(dt_testing)
+**20 obs. of 53 variables**
 
 ### STEP 4 - Partitioning the Dataset
 Setting the seed for reproducibility
@@ -106,9 +110,9 @@ training <- dt_training[inTrain,]
 testing <- dt_training[-inTrain,]
 
 dim(training)
-** 11776 obs. of 53 variables **
+**11776 obs. of 53 variables**
 dim(testing)
-** 7846 obs. of 53 variables **
+**7846 obs. of 53 variables**
 
 ### STEP 5 - Building and comparing the Models
 
@@ -125,9 +129,9 @@ set.seed(5656)
 prediction <- predict(modFitDT, testing, type = "class")
 confusionMatrix(prediction, testing$classe)
 
-** Results from Confusion Matrix and Statistics: **
+**Results from Confusion Matrix and Statistics:**
 
-          Reference
+Reference
 Prediction    A    B    C    D    E
          A 2026  252   45   81   46
          B   60  868   70   96  114
@@ -135,19 +139,15 @@ Prediction    A    B    C    D    E
          D   70  111   83  820   86
          E   33  100   91  108 1050
 
-Overall Statistics
-                                          
+Overall Statistics                             
                Accuracy : 0.7447          
                  95% CI : (0.7349, 0.7543)
     No Information Rate : 0.2845          
-    P-Value [Acc > NIR] : < 2.2e-16       
-                                          
-                  Kappa : 0.6761          
-                                          
+    P-Value [Acc > NIR] : < 2.2e-16                              
+                  Kappa : 0.6761                                
  Mcnemar's Test P-Value : < 2.2e-16       
 
 Statistics by Class:
-
                      Class: A Class: B Class: C Class: D Class: E
 Sensitivity            0.9077   0.5718   0.7887   0.6376   0.7282
 Specificity            0.9245   0.9463   0.9140   0.9466   0.9482
@@ -158,8 +158,8 @@ Detection Rate         0.2582   0.1106   0.1375   0.1045   0.1338
 Detection Prevalence   0.3123   0.1540   0.2085   0.1491   0.1761
 Balanced Accuracy      0.9161   0.7590   0.8514   0.7921   0.8382
 
-** Accuracy of the Decision Tree Model is only 74%. **
-** I will try the Random Forest Model with which the accuracy should be much better. **
+**Accuracy of the Decision Tree Model is only 74%.**
+**I will try the Random Forest Model with which the accuracy should be much better.**
 
 #### 2nd Model - Random Forest
 Using random forest, the out of sample error should be small. The error will be estimated using the 40% testing sample.
@@ -173,9 +173,8 @@ prediction <- predict(modFitRF, testing, type = "class")
 
 confusionMatrix(prediction, testing$classe)
 
-** Results from Confusion Matrix and Statistics: **
-
-          Reference
+**Results from Confusion Matrix and Statistics:**
+Reference
 Prediction    A    B    C    D    E
          A 2228    4    0    0    0
          B    4 1507   13    0    0
@@ -183,19 +182,15 @@ Prediction    A    B    C    D    E
          D    0    0    0 1263    3
          E    0    0    0    0 1438
 
-Overall Statistics
-                                          
+Overall Statistics                                        
                Accuracy : 0.993           
                  95% CI : (0.9909, 0.9947)
     No Information Rate : 0.2845          
-    P-Value [Acc > NIR] : < 2.2e-16       
-                                          
-                  Kappa : 0.9911          
-                                          
+    P-Value [Acc > NIR] : < 2.2e-16                                      
+                  Kappa : 0.9911                                       
  Mcnemar's Test P-Value : NA              
 
 Statistics by Class:
-
                      Class: A Class: B Class: C Class: D Class: E
 Sensitivity            0.9982   0.9928   0.9905   0.9821   0.9972
 Specificity            0.9993   0.9973   0.9952   0.9995   1.0000
@@ -206,7 +201,7 @@ Detection Rate         0.2840   0.1921   0.1727   0.1610   0.1833
 Detection Prevalence   0.2845   0.1942   0.1767   0.1614   0.1833
 Balanced Accuracy      0.9987   0.9950   0.9929   0.9908   0.9986
 
-** As can be seen from the confusion matrix the Random Forest model is very accurate, about 99.3%.**
+**As can be seen from the confusion matrix the Random Forest model is very accurate, about 99.3%.**
 
 ### STEP 5 - Predicting on the Testing Data (pml-testing.csv)
 
@@ -223,7 +218,7 @@ Levels: A B C D E
 predictionRF <- predict(modFitRF, dt_testing, type = "class")
 predictionRF
 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 
-** B  A  B  A  A  E  D  B  A  A  B  C  B  A  E  E  A  B  B  B **
-** Levels: A B C D E **
+**B  A  B  A  A  E  D  B  A  A  B  C  B  A  E  E  A  B  B  B**
+**Levels: A B C D E **
 
 # END
