@@ -65,7 +65,7 @@ dim(testing)   # 7846 obs. of 53 variables
 # Build the model
 modFitDT <- rpart(classe ~ ., data = training, method="class")
 fancyRpartPlot(modFitDT)
-# Please look at plot1.png file for the result
+# Please look at "Week4 Project - Decision Tree Model - Rplot.png" file for the result
 
 # Prediction
 set.seed(5656)
