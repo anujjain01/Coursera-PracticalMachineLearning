@@ -9,13 +9,13 @@ In this project, your goal will be to use data from accelerometers on the belt, 
 More information is available from the website here: http://groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset).
 
 ## DataSet
-The training data for this project are available here:
+The training data for this project are available here:  
 https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv
 
-The test data are available here:
+The test data are available here:  
 https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv
 
-The data for this project come from this source: http://groupware.les.inf.puc-rio.br/har. 
+The data for this project come from this source: http://groupware.les.inf.puc-rio.br/har.  
 If you use the document you create for this class for any purpose please cite them as they have been very generous in allowing their data to be used for this kind of assignment.
 
 ## What you should submit
@@ -50,15 +50,15 @@ library(randomForest)
 Download the data files from the Internet and load them into two data frames. 
 We ended up with a training dataset and a 20 observations testing dataset that will be submitted to Coursera.
 
-UrlTrain <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
-UrlTest  <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
+UrlTrain <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"  
+UrlTest  <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"  
 
 setwd("C:/Users/Philippe/Documents/DataCourse")
 
-dt_training <- read.csv(url(UrlTrain))
-**19622 obs. of 160 variables**
-dt_testing  <- read.csv(url(UrlTest))
-**20 obs. of 160 variables**
+dt_training <- read.csv(url(UrlTrain))  
+**19622 obs. of 160 variables**  
+dt_testing  <- read.csv(url(UrlTest))  
+**20 obs. of 160 variables**  
 
 ### STEP 3 - Cleaning the Data
 Remove all columns that contains NA and remove features that are not in the testing dataset. 
@@ -66,9 +66,9 @@ The features containing NA are the variance, mean and standard devition (SD) wit
 Since the testing dataset has no time-dependence, these values are useless and can be disregarded. 
 Also remove the first 7 features as they are related to the time-series or are not numeric.
 
-features <- names(dt_testing[,colSums(is.na(dt_testing)) == 0])[8:59]
+features <- names(dt_testing[,colSums(is.na(dt_testing)) == 0])[8:59]  
 
-List of features remaining:
+List of features remaining:  
  [1] "roll_belt"            "pitch_belt"           "yaw_belt"            
  [4] "total_accel_belt"     "gyros_belt_x"         "gyros_belt_y"        
  [7] "gyros_belt_z"         "accel_belt_x"         "accel_belt_y"        
@@ -88,46 +88,47 @@ List of features remaining:
 [49] "accel_forearm_z"      "magnet_forearm_x"     "magnet_forearm_y"    
 [52] "magnet_forearm_z"    
 
-Only use features used in testing cases:
-dt_training <- dt_training[,c(features,"classe")]
-dt_testing <- dt_testing[,c(features,"problem_id")]
+Only use features used in testing cases:  
+dt_training <- dt_training[,c(features,"classe")]  
+dt_testing <- dt_testing[,c(features,"problem_id")]  
 
-dim(dt_training)
-**19622 obs. of 53 variables**
-dim(dt_testing)
-**20 obs. of 53 variables**
+dim(dt_training)  
+**19622 obs. of 53 variables**  
+dim(dt_testing)  
+**20 obs. of 53 variables**  
 
 ### STEP 4 - Partitioning the Dataset
-Setting the seed for reproducibility
-set.seed(5656)
+Setting the seed for reproducibility  
+set.seed(5656)  
 
 The objective is to get training, cross-validation, and testing sets.
 I split the training data into a training data set (60% of the total cases) and a testing data set - or cross-validation (40% of the total cases). 
 It will help estimate the out of sample error.
 
-inTrain <- createDataPartition(dt_training$classe, p=0.6, list=FALSE)
-training <- dt_training[inTrain,]
-testing <- dt_training[-inTrain,]
+inTrain <- createDataPartition(dt_training$classe, p=0.6, list=FALSE)  
+training <- dt_training[inTrain,]  
+testing <- dt_training[-inTrain,]  
 
-dim(training)
-**11776 obs. of 53 variables**
-dim(testing)
-**7846 obs. of 53 variables**
+dim(training)  
+**11776 obs. of 53 variables**  
+dim(testing)  
+**7846 obs. of 53 variables**  
 
 ### STEP 5 - Building and comparing the Models
 
 #### 1st Model - Decision Tree
 First, I will try using Decision Tree. The accuracy may not be high.
 
-Build the model:
-modFitDT <- rpart(classe ~ ., data = training, method="class")
-fancyRpartPlot(modFitDT)
+Build the model:  
+modFitDT <- rpart(classe ~ ., data = training, method="class")  
+fancyRpartPlot(modFitDT)  
+** Please look at "Week4 Project - Decision Tree Model - Rplot.png" file for the result**  
 
-Prediction:
-set.seed(5656)
+Prediction:  
+set.seed(5656)  
 
-prediction <- predict(modFitDT, testing, type = "class")
-confusionMatrix(prediction, testing$classe)
+prediction <- predict(modFitDT, testing, type = "class")  
+confusionMatrix(prediction, testing$classe)  
 
 **Results from Confusion Matrix and Statistics:**
 
@@ -158,22 +159,22 @@ Detection Rate         0.2582   0.1106   0.1375   0.1045   0.1338
 Detection Prevalence   0.3123   0.1540   0.2085   0.1491   0.1761
 Balanced Accuracy      0.9161   0.7590   0.8514   0.7921   0.8382
 
-**Accuracy of the Decision Tree Model is only 74%.**
-**I will try the Random Forest Model with which the accuracy should be much better.**
+**Accuracy of the Decision Tree Model is only 74%.**  
+**I will try the Random Forest Model with which the accuracy should be much better.**  
 
 #### 2nd Model - Random Forest
 Using random forest, the out of sample error should be small. The error will be estimated using the 40% testing sample.
 
-Build the model:
-set.seed(5656)
-modFitRF <- randomForest(classe ~ ., data = training, ntree = 1000)
+Build the model:  
+set.seed(5656)  
+modFitRF <- randomForest(classe ~ ., data = training, ntree = 1000)  
 
-Prediction:
-prediction <- predict(modFitRF, testing, type = "class")
+Prediction:  
+prediction <- predict(modFitRF, testing, type = "class")  
 
 confusionMatrix(prediction, testing$classe)
 
-**Results from Confusion Matrix and Statistics:**
+**Results from Confusion Matrix and Statistics:**  
 Reference
 Prediction    A    B    C    D    E
          A 2228    4    0    0    0
@@ -201,24 +202,24 @@ Detection Rate         0.2840   0.1921   0.1727   0.1610   0.1833
 Detection Prevalence   0.2845   0.1942   0.1767   0.1614   0.1833
 Balanced Accuracy      0.9987   0.9950   0.9929   0.9908   0.9986
 
-**As can be seen from the confusion matrix the Random Forest model is very accurate, about 99.3%.**
+**As can be seen from the confusion matrix the Random Forest model is very accurate, about 99.3%.**  
 
 ### STEP 5 - Predicting on the Testing Data (pml-testing.csv)
 
 #### Decision Tree Prediction
-predictionDT <- predict(modFitDT, dt_testing, type = "class")
-predictionDT
+predictionDT <- predict(modFitDT, dt_testing, type = "class")  
+predictionDT  
 
-Results:
-1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
-C  A  E  D  A  C  D  D  A  A  C  E  A  A  E  E  A  B  B  B
-Levels: A B C D E
+Results:  
+1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20  
+C  A  E  D  A  C  D  D  A  A  C  E  A  A  E  E  A  B  B  B  
+Levels: A B C D E  
 
 #### Random Forest Prediction
-predictionRF <- predict(modFitRF, dt_testing, type = "class")
-predictionRF
-1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 
-**B  A  B  A  A  E  D  B  A  A  B  C  B  A  E  E  A  B  B  B**
-**Levels: A B C D E **
+predictionRF <- predict(modFitRF, dt_testing, type = "class")  
+predictionRF  
+1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20   
+**B  A  B  A  A  E  D  B  A  A  B  C  B  A  E  E  A  B  B  B**  
+**Levels: A B C D E **  
 
 # END
